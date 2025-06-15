@@ -1,120 +1,118 @@
-# 🎯 Challenge CyberSecurity — Detecção de Apostas Compulsivas
+Projeto: Detecção de Apostas Compulsivas
+📘 Descrição
+Este projeto tem como objetivo criar uma solução baseada em inteligência artificial para identificar usuários com comportamentos de risco relacionados a apostas compulsivas. Ele utiliza um modelo preditivo para classificar o risco e fornece explicações interpretáveis com SHAP, além de boas práticas de cibersegurança.
 
-Este projeto propõe uma solução inteligente e segura para detectar comportamentos compulsivos em apostas online, fornecendo alertas, explicações e integrando princípios éticos e legais (LGPD).
+👥 Integrantes
+Caique Chagas – RM 551943
 
----
+Guilherme Dal Posolo Matheus – RM 98694
 
-## 📁 Estrutura do Projeto
+Guilherme Faustino Vargas – RM 98278
 
-challengeCyberSecurity/
-├── app.py # API principal com Flask
-├── auditoria_etica.py # Verificação ética do modelo
-├── gera_modelo.py # Script de criação do modelo ML
-├── models/
-│ └── risk_model.pkl # Modelo treinado
-├── utils/
-│ ├── crypto.py # Criptografia e segurança
-│ ├── lgpd_logger.py # Registro e rastreabilidade (LGPD)
-│ └── .fernet.key # Chave de criptografia
-├── data/
-│ └── synthetic_data.csv # Dados sintéticos para testes
-├── logs/
-│ └── atividade.log # Log de auditoria
-├── models.py # Esquema de entrada com Pydantic
-├── monitoramento.py # Monitoramento de atividades
-├── teste_adversario.py # Testes de ataque adversarial
-├── requirements.txt
-└── readme.md
+João Lucas Yudi Hedi Handa – RM 98458
 
+Ryan Perez Pacheco – RM 98782
 
----
+🚀 Como Executar o Projeto
+Pré-requisitos
+Python 3.10+
 
-## ⚙️ Como Executar o Projeto
+Git
 
-### 1. Criar ambiente virtual e instalar dependências
-
-```bash
-python -m venv venv
-.\venv\Scripts\Activate.ps1     # PowerShell no Windows
-pip install -r requirements.txt
-2. Gerar o modelo (caso ainda não exista)
+1. Clone o repositório
 bash
 Copiar
 Editar
-python gera_modelo.py
-3. Iniciar o servidor Flask
+git clone https://github.com/seu-usuario/challengeCyberSecurity.git
+cd challengeCyberSecurity
+2. Crie e ative o ambiente virtual
+bash
+Copiar
+Editar
+python -m venv venv
+.\venv\Scripts\activate     # Windows
+# ou
+source venv/bin/activate    # Linux/macOS
+3. Instale as dependências
+bash
+Copiar
+Editar
+pip install -r requirements.txt
+4. Execute a aplicação
 bash
 Copiar
 Editar
 python app.py
-🔐 Login e Autenticação JWT
-Obter token de acesso
-powershell
-Copiar
-Editar
-$body = @{ usuario = "admin"; senha = "123456" } | ConvertTo-Json
-$response = Invoke-RestMethod -Uri http://localhost:5000/login -Method Post -Body $body -ContentType "application/json"
-$token = $response.token
-📊 Enviar dados para análise
+O serviço estará disponível em: http://localhost:5000
+
+🧪 Exemplo de Requisição PowerShell
 powershell
 Copiar
 Editar
 $body = @{
-    daily_bets = 5
-    avg_bet_amount = 200.0
-    sessions_per_day = 3
-    time_spent_minutes = 90.0
-    lost_money_days = 4
-    won_money_days = 1
-    self_exclusion_attempts = 1
-    account_age_days = 365
-} | ConvertTo-Json -Depth 3
+    "usuario" = "admin"
+    "senha"   = "123456"
+} | ConvertTo-Json
 
-Invoke-RestMethod -Uri http://localhost:5000/analyze `
-  -Method Post `
+$response = Invoke-RestMethod -Uri http://localhost:5000/login -Method Post -Body $body -ContentType "application/json"
+$token = $response.token
+
+$input = @{
+    "daily_bets"              = 5
+    "avg_bet_amount"          = 50.75
+    "sessions_per_day"        = 3
+    "time_spent_minutes"      = 120
+    "lost_money_days"         = 3
+    "won_money_days"          = 2
+    "self_exclusion_attempts" = 1
+    "account_age_days"        = 200
+    "ja_buscou_ajuda"         = $false
+    "uso_cartao_credito"      = $true
+} | ConvertTo-Json
+
+Invoke-RestMethod -Uri http://localhost:5000/analyze -Method Post `
   -Headers @{ Authorization = "Bearer $token" } `
-  -Body $body `
-  -ContentType "application/json"
-✅ Funcionalidades
-🔍 Detecção de risco com modelo de machine learning
+  -Body $input -ContentType "application/json"
+🔐 Segurança e Conformidade
+✅ Recebimento e Processamento
+ Validação e sanitização de entradas
 
-🔐 Autenticação JWT e proteção de endpoints
+ Monitoramento de anomalias básicas
 
-🧠 Explicabilidade com SHAP
+ Preparado para integração com pipeline DevSecOps
 
-🛡️ Criptografia e conformidade com LGPD
+✅ Explicabilidade (XAI)
+ Explicações com SHAP
 
-📁 Logs de uso e exclusão de dados
+ Limpeza dos dados explicativos sensíveis
 
-🧪 Testes de segurança adversarial
+ Preparação para adversarial robustness
 
-⚖️ Auditoria de vieses e ética em IA
+✅ Mitigação de Vieses
+ Dataset balanceado
 
-📦 Tecnologias
-Python 3.12
+ Possibilidade de auditoria
 
-Flask
+ Representatividade nos dados
 
-scikit-learn
+✅ LGPD
+ Criptografia aplicada ao armazenamento
 
-SHAP
+ Rastreamento por logs
 
-PyJWT
+ Controle de consentimento do usuário
 
-Pydantic
+✅ Segurança Geral
+ Autenticação JWT com tokens
 
-Cryptography (Fernet)
+ Proteção de endpoints
 
-LGPD logger
+ Arquitetura preparada para Zero Trust
 
-👨‍💻 Integrantes
-Caique Chagas – RM: 551943
+✅ Design Ético
+ Transparência algorítmica
 
-Guilherme Dal Posolo Matheus – RM: 98694
+ Direitos do usuário respeitados
 
-Guilherme Faustino Vargas – RM: 98278
-
-João Lucas Yudi Hedi Handa – RM: 98458
-
-Ryan Perez Pacheco – RM: 98782
+ Política ética definida
 
