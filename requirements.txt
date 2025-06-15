@@ -1,0 +1,7 @@
+flask
+pydantic
+pandas
+numpy
+scikit-learn
+shap
+PyJWT
