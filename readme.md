@@ -1,120 +1,134 @@
-# 🎯 Challenge CyberSecurity — Detecção de Apostas Compulsivas
+# Projeto: Detecção de Apostas Compulsivas 📘
 
-Este projeto propõe uma solução inteligente e segura para detectar comportamentos compulsivos em apostas online, fornecendo alertas, explicações e integrando princípios éticos e legais (LGPD).
+## 📄 Descrição
 
----
-
-## 📁 Estrutura do Projeto
-
-challengeCyberSecurity/
-├── app.py # API principal com Flask
-├── auditoria_etica.py # Verificação ética do modelo
-├── gera_modelo.py # Script de criação do modelo ML
-├── models/
-│ └── risk_model.pkl # Modelo treinado
-├── utils/
-│ ├── crypto.py # Criptografia e segurança
-│ ├── lgpd_logger.py # Registro e rastreabilidade (LGPD)
-│ └── .fernet.key # Chave de criptografia
-├── data/
-│ └── synthetic_data.csv # Dados sintéticos para testes
-├── logs/
-│ └── atividade.log # Log de auditoria
-├── models.py # Esquema de entrada com Pydantic
-├── monitoramento.py # Monitoramento de atividades
-├── teste_adversario.py # Testes de ataque adversarial
-├── requirements.txt
-└── readme.md
-
+Este projeto tem como objetivo criar uma solução baseada em inteligência artificial para identificar usuários com comportamentos de risco relacionados a apostas compulsivas. Ele utiliza um modelo preditivo para classificar o risco e fornece explicações interpretáveis com SHAP, além de boas práticas de cibersegurança.
 
 ---
 
-## ⚙️ Como Executar o Projeto
+## 👥 Integrantes
 
-### 1. Criar ambiente virtual e instalar dependências
+- Caique Chagas – RM 551943  
+- Guilherme Dal Posolo Matheus – RM 98694  
+- Guilherme Faustino Vargas – RM 98278  
+- João Lucas Yudi Hedi Handa – RM 98458  
+- Ryan Perez Pacheco – RM 98782  
 
+---
+
+## 🚀 Como Executar o Projeto
+
+### Pré-requisitos
+- Python 3.10+
+- Git
+
+### Passos
+
+1. Clone o repositório:
 ```bash
-python -m venv venv
-.\venv\Scripts\Activate.ps1     # PowerShell no Windows
-pip install -r requirements.txt
-2. Gerar o modelo (caso ainda não exista)
+git clone https://github.com/seu-usuario/challengeCyberSecurity.git
+cd challengeCyberSecurity
+Crie e ative o ambiente virtual:
+
 bash
 Copiar
 Editar
-python gera_modelo.py
-3. Iniciar o servidor Flask
+python -m venv venv
+.\venv\Scripts\activate  # Windows
+# ou
+source venv/bin/activate  # Linux/macOS
+Instale as dependências:
+
+bash
+Copiar
+Editar
+pip install -r requirements.txt
+Execute a aplicação:
+
 bash
 Copiar
 Editar
 python app.py
-🔐 Login e Autenticação JWT
-Obter token de acesso
-powershell
-Copiar
-Editar
-$body = @{ usuario = "admin"; senha = "123456" } | ConvertTo-Json
-$response = Invoke-RestMethod -Uri http://localhost:5000/login -Method Post -Body $body -ContentType "application/json"
-$token = $response.token
-📊 Enviar dados para análise
+O serviço estará disponível em: http://localhost:5000
+
+🧪 Exemplo de Requisição
 powershell
 Copiar
 Editar
 $body = @{
-    daily_bets = 5
-    avg_bet_amount = 200.0
-    sessions_per_day = 3
-    time_spent_minutes = 90.0
-    lost_money_days = 4
-    won_money_days = 1
-    self_exclusion_attempts = 1
-    account_age_days = 365
-} | ConvertTo-Json -Depth 3
+  "usuario" = "admin"
+  "senha" = "123456"
+} | ConvertTo-Json
 
-Invoke-RestMethod -Uri http://localhost:5000/analyze `
-  -Method Post `
-  -Headers @{ Authorization = "Bearer $token" } `
-  -Body $body `
-  -ContentType "application/json"
-✅ Funcionalidades
-🔍 Detecção de risco com modelo de machine learning
+$response = Invoke-RestMethod -Uri http://localhost:5000/login -Method Post -Body $body -ContentType "application/json"
+$token = $response.token
 
-🔐 Autenticação JWT e proteção de endpoints
+$input = @{
+  "daily_bets" = 5
+  "avg_bet_amount" = 50.75
+  "sessions_per_day" = 3
+  "time_spent_minutes" = 120
+  "lost_money_days" = 3
+  "won_money_days" = 2
+  "self_exclusion_attempts" = 1
+  "account_age_days" = 200
+  "ja_buscou_ajuda" = $false
+  "uso_cartao_credito" = $true
+} | ConvertTo-Json
 
-🧠 Explicabilidade com SHAP
+Invoke-RestMethod -Uri http://localhost:5000/analyze -Method Post -Headers @{ Authorization = "Bearer $token" } -Body $input -ContentType "application/json"
+🔐 Segurança e Conformidade
+✅ Recebimento e Processamento
+Validação de entradas com Pydantic
 
-🛡️ Criptografia e conformidade com LGPD
+Sanitização e checagem automática de tipos
 
-📁 Logs de uso e exclusão de dados
+Registro de logs com horário e atividade via lgpd_logger
 
-🧪 Testes de segurança adversarial
+Preparado para pipeline DevSecOps com análise estática (Bandit)
 
-⚖️ Auditoria de vieses e ética em IA
+✅ Explicabilidade (XAI)
+Explicações com SHAP integradas
 
-📦 Tecnologias
-Python 3.12
+Remoção de dados sensíveis nos retornos
 
-Flask
+Estrutura compatível com testes de robustez adversária
 
-scikit-learn
+✅ Mitigação de Vieses
+Dataset balanceado
 
-SHAP
+Capacidade de auditoria (módulo auditoria_etica.py)
 
-PyJWT
+Representatividade considerada na base
 
-Pydantic
+✅ LGPD
+Criptografia em repouso com Fernet (AES)
 
-Cryptography (Fernet)
+Logs com rastreabilidade
 
-LGPD logger
+Preparado para consentimento explícito do usuário
 
-👨‍💻 Integrantes
-Caique Chagas – RM: 551943
+✅ Segurança Geral
+Autenticação via JWT com validade e verificação
 
-Guilherme Dal Posolo Matheus – RM: 98694
+Validação de token nos endpoints
 
-Guilherme Faustino Vargas – RM: 98278
+Estrutura compatível com princípios de Zero Trust
 
-João Lucas Yudi Hedi Handa – RM: 98458
+✅ Design Ético
+Transparência algorítmica com explicabilidade (SHAP)
 
-Ryan Perez Pacheco – RM: 98782
+Diretos do usuário respeitados (explicação + controle)
 
+Política ética representada em código e logs
+
+📊 Análise Estática com Bandit
+A aplicação passou por uma análise estática com Bandit, que identificou boas práticas de segurança e pontos de melhoria:
+
+✅ Relatório disponível em: /security/bandit-report.txt
+
+Pontos identificados:
+
+Uso do módulo pickle (seguro neste contexto)
+
+Segredo JWT hardcoded (recomenda-se usar variável de ambiente)
